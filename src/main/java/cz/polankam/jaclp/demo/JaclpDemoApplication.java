@@ -1,4 +1,4 @@
-package cz.polankam.jaclp.demo.jaclpdemo;
+package cz.polankam.jaclp.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
