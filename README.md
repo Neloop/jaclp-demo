@@ -1,6 +1,6 @@
 # JACLP Demo Application
 
-[![Build Status](https://travis-ci.org/Neloop/jaclp.svg?branch=master)](https://travis-ci.org/Neloop/jaclp)
+[![Build Status](https://travis-ci.org/Neloop/jaclp-demo.svg?branch=master)](https://travis-ci.org/Neloop/jaclp-demo)
 [![License](http://img.shields.io/:license-mit-blue.svg)](https://github.com/Neloop/jaclp/blob/master/LICENSE)
 
 Demo Spring Boot project for JACLP library.
