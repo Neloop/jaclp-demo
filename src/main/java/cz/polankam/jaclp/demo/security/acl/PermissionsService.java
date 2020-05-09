@@ -1,5 +1,6 @@
 package cz.polankam.jaclp.demo.security.acl;
 
+import cz.polankam.jaclp.demo.model.repository.GroupRepository;
 import cz.polankam.security.acl.IPermissionsService;
 import cz.polankam.security.acl.IResourceRepository;
 import cz.polankam.security.acl.Role;
@@ -20,8 +21,35 @@ public class PermissionsService implements IPermissionsService {
      * application and assign permission rules to them.
      */
     @Autowired
-    public PermissionsService() {
-        // TODO
+    public PermissionsService(
+            GroupRepository groupRepository
+    ) {
+        Role user = new Role(Roles.USER);
+        Role admin = new Role(Roles.ADMIN, user);
+
+        user.addPermissionRules(
+                true,
+                "group",
+                GroupConditions::isMember,
+                "view"
+        ).addPermissionRules(
+                true,
+                "group",
+                GroupConditions::isManager,
+                "update"
+        );
+
+        admin.addPermissionRules(
+                true,
+                "group",
+                "create"
+        );
+
+        roles.put(user.getName(), user);
+        roles.put(admin.getName(), admin);
+
+        // repositories which will be used to find resources by identification
+        resources.put("group", groupRepository);
     }
 
     public boolean roleExists(String role) {
