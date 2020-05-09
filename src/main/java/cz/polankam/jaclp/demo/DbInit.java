@@ -33,7 +33,6 @@ public class DbInit implements InitializingBean {
         GroupEntity group = groupRepository.save(new GroupEntity("demo-group", "description"));
         group.getMemberships().add(new GroupMembershipEntity(manager, group, MembershipType.MANAGER));
         group.getMemberships().add(new GroupMembershipEntity(user1, group, MembershipType.USER));
-        group.getMemberships().add(new GroupMembershipEntity(user2, group, MembershipType.USER));
         // save memberships
         groupRepository.save(group);
     }
