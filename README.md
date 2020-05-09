@@ -1,4 +1,7 @@
-# jaclp-demo
+# JACLP Demo Application
+
+[![Build Status](https://travis-ci.org/Neloop/jaclp.svg?branch=master)](https://travis-ci.org/Neloop/jaclp)
+[![License](http://img.shields.io/:license-mit-blue.svg)](https://github.com/Neloop/jaclp/blob/master/LICENSE)
 
 Demo Spring Boot project for JACLP library.
 The demo uses `Spring Security` and `Spring Data JPA` and by default runs on `H2` in-memory database.

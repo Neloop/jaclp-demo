@@ -34,11 +34,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Restrict other request only for authenticated users
         http.authorizeRequests().anyRequest().authenticated();
     }
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("admin").password("password").roles("ADMIN");
-        auth.inMemoryAuthentication().withUser("manager").password("password").roles("USER");
-        auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
-    }
 }
