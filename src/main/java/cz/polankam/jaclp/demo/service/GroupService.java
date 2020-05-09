@@ -1,6 +1,8 @@
 package cz.polankam.jaclp.demo.service;
 
 import cz.polankam.jaclp.demo.model.dto.GroupDTO;
+import cz.polankam.jaclp.demo.model.dto.GroupUpdateDTO;
+import cz.polankam.jaclp.demo.model.entity.GroupEntity;
 import cz.polankam.jaclp.demo.model.entity.UserEntity;
 import cz.polankam.jaclp.demo.model.mapper.GroupMapper;
 import cz.polankam.jaclp.demo.model.repository.GroupRepository;
@@ -25,8 +27,7 @@ public class GroupService {
     private final SecurityContextUtils securityContextUtils;
 
     public GroupDTO getOrThrow(long id) {
-        return mapper.toDTO(repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Group with ID '" + id + "' not found")));
+        return mapper.toDTO(getEntityOrThrow(id));
     }
 
     public List<GroupDTO> getAll() {
@@ -39,5 +40,19 @@ public class GroupService {
             throw new RuntimeException("Well, this was unexpected...");
         }
         return repository.findForUser(user);
+    }
+
+    public GroupDTO update(long id, GroupUpdateDTO update) {
+        GroupEntity group = getEntityOrThrow(id);
+        group.setName(update.getName());
+        group.setDescription(update.getDescription());
+        return mapper.toDTO(repository.save(group));
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    private GroupEntity getEntityOrThrow(long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Group with ID '" + id + "' not found"));
     }
 }

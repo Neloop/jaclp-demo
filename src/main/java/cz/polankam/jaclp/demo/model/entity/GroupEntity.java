@@ -2,6 +2,7 @@ package cz.polankam.jaclp.demo.model.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -20,10 +21,12 @@ public class GroupEntity {
     @GeneratedValue
     private Long id;
 
+    @Setter
     @NotBlank
     private String name;
 
     @Lob
+    @Setter
     private String description;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "group")
