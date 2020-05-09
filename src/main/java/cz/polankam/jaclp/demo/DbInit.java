@@ -9,6 +9,7 @@ import cz.polankam.jaclp.demo.model.repository.UserRepository;
 import cz.polankam.jaclp.demo.security.acl.Roles;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +23,14 @@ public class DbInit implements InitializingBean {
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final ApplicationContext context;
 
     @Override
     public void afterPropertiesSet() throws Exception {
         userRepository.save(new UserEntity("admin", Roles.ADMIN, passwordEncoder.encode("password")));
         UserEntity manager = userRepository.save(new UserEntity("manager", Roles.USER, passwordEncoder.encode("password")));
         UserEntity user1 = userRepository.save(new UserEntity("user-1", Roles.USER, passwordEncoder.encode("password")));
-        UserEntity user2 = userRepository.save(new UserEntity("user-2", Roles.USER, passwordEncoder.encode("password")));
+        userRepository.save(new UserEntity("user-2", Roles.USER, passwordEncoder.encode("password")));
 
         GroupEntity group = groupRepository.save(new GroupEntity("demo-group", "description"));
         group.getMemberships().add(new GroupMembershipEntity(manager, group, MembershipType.MANAGER));

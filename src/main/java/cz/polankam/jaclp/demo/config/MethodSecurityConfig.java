@@ -1,11 +1,11 @@
 package cz.polankam.jaclp.demo.config;
 
 import cz.polankam.security.acl.AclPermissionEvaluator;
-import cz.polankam.security.acl.AuthorizatorService;
-import cz.polankam.security.acl.IPermissionsService;
+import cz.polankam.security.acl.JaclpSpringConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -14,24 +14,18 @@ import org.springframework.security.config.annotation.method.configuration.Globa
 /**
  * Enable and set method security, most importantly define custom behavior for
  * <code>hasPermission</code> authorization methods within authorize
- * annotations. Proxy target class property has to be allowed, otherwise
- * transactions on the permission evaluator will not work.
+ * annotations.
  */
 @Configuration
+@Import(JaclpSpringConfiguration.class)
 @EnableGlobalMethodSecurity(prePostEnabled = true, proxyTargetClass = true)
 public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
 
-    private AclPermissionEvaluator permissionEvaluator;
+    private final AclPermissionEvaluator permissionEvaluator;
 
     @Autowired
-    public MethodSecurityConfig(IPermissionsService permissionsService) {
-        permissionEvaluator = new AclPermissionEvaluator(permissionsService);
-    }
-
-
-    @Bean
-    public AuthorizatorService authorizatorService() {
-        return new AuthorizatorService(permissionEvaluator);
+    public MethodSecurityConfig(@Lazy AclPermissionEvaluator permissionEvaluator) {
+        this.permissionEvaluator = permissionEvaluator;
     }
 
     @Override

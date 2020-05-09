@@ -39,7 +39,7 @@ public class GroupService {
         if (user == null) {
             throw new RuntimeException("Well, this was unexpected...");
         }
-        return repository.findForUser(user);
+        return repository.findForUser(user).stream().map(mapper::toDTO).collect(Collectors.toList());
     }
 
     public GroupDTO update(long id, GroupUpdateDTO update) {

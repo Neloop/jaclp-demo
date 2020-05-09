@@ -18,5 +18,5 @@ public interface GroupRepository extends JpaRepository<GroupEntity, Long>,
         IResourceRepository<GroupEntity, Long> {
 
     @Query("SELECT DISTINCT g FROM GroupEntity g JOIN g.memberships m WHERE m.user = :user")
-    List<GroupDTO> findForUser(UserEntity user);
+    List<GroupEntity> findForUser(UserEntity user);
 }
