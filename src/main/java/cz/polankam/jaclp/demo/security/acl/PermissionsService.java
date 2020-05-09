@@ -1,6 +1,7 @@
 package cz.polankam.jaclp.demo.security.acl;
 
 import cz.polankam.jaclp.demo.model.repository.GroupRepository;
+import cz.polankam.jaclp.demo.model.repository.UserRepository;
 import cz.polankam.security.acl.IPermissionsService;
 import cz.polankam.security.acl.IResourceRepository;
 import cz.polankam.security.acl.Role;
@@ -22,33 +23,38 @@ public class PermissionsService implements IPermissionsService {
      */
     @Autowired
     public PermissionsService(
+            UserRepository userRepository,
             GroupRepository groupRepository
     ) {
         Role user = new Role(Roles.USER);
         Role admin = new Role(Roles.ADMIN, user);
 
-        user.addPermissionRules(
-                true,
-                "group",
-                GroupConditions::isMember,
-                "view"
-        ).addPermissionRules(
-                true,
-                "group",
-                GroupConditions::isManager,
-                "update"
-        );
+        user
+                .addPermissionRules(
+                        true,
+                        "user",
+                        UserConditions::isSameUser,
+                        "view")
+                .addPermissionRules(true, "group", "viewMine")
+                .addPermissionRules(
+                        true,
+                        "group",
+                        GroupConditions::isMember,
+                        "view")
+                .addPermissionRules(
+                        true,
+                        "group",
+                        GroupConditions::isManager,
+                        "update");
 
-        admin.addPermissionRules(
-                true,
-                "group",
-                "create"
-        );
+        // admin can do everything in the system
+        admin.addPermissionRules(true, "*", "*");
 
         roles.put(user.getName(), user);
         roles.put(admin.getName(), admin);
 
         // repositories which will be used to find resources by identification
+        resources.put("user", userRepository);
         resources.put("group", groupRepository);
     }
 

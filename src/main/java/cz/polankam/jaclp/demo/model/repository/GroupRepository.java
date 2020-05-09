@@ -14,7 +14,8 @@ import java.util.List;
  * Created by Martin Polanka on 09.05.2020.
  */
 @Repository
-public interface GroupRepository extends JpaRepository<GroupEntity, Long>, IResourceRepository<GroupEntity, Long> {
+public interface GroupRepository extends JpaRepository<GroupEntity, Long>,
+        IResourceRepository<GroupEntity, Long> {
 
     @Query("SELECT DISTINCT g FROM GroupEntity g JOIN g.memberships m WHERE m.user = :user")
     List<GroupDTO> findForUser(UserEntity user);
