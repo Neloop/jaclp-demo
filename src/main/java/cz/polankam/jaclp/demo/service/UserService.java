@@ -5,6 +5,7 @@ import cz.polankam.jaclp.demo.model.mapper.UserMapper;
 import cz.polankam.jaclp.demo.model.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
+@Transactional(rollbackFor = Exception.class)
 public class UserService {
 
     private final UserRepository repository;
