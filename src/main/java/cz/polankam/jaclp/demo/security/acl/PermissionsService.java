@@ -1,4 +1,4 @@
-package cz.polankam.jaclp.demo.security;
+package cz.polankam.jaclp.demo.security.acl;
 
 import cz.polankam.security.acl.IPermissionsService;
 import cz.polankam.security.acl.IResourceRepository;
