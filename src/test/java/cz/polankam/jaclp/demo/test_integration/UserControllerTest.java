@@ -54,7 +54,7 @@ public class UserControllerTest {
         Map body = response.getBody();
         assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
         assertEquals(403, body.get("status"));
-        assertEquals("Forbidden", body.get("message"));
+        assertEquals("Forbidden", body.get("error"));
     }
 
     /**
@@ -87,7 +87,7 @@ public class UserControllerTest {
         Map body = response.getBody();
         assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
         assertEquals(403, body.get("status"));
-        assertEquals("Forbidden", body.get("message"));
+        assertEquals("Forbidden", body.get("error"));
     }
 
     /**

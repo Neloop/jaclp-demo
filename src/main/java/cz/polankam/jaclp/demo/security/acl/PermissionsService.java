@@ -5,6 +5,7 @@ import cz.polankam.jaclp.demo.model.repository.UserRepository;
 import cz.polankam.security.acl.IPermissionsService;
 import cz.polankam.security.acl.IResourceRepository;
 import cz.polankam.security.acl.Role;
+import cz.polankam.security.acl.RoleBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,29 +27,27 @@ public class PermissionsService implements IPermissionsService {
             UserRepository userRepository,
             GroupRepository groupRepository
     ) {
-        Role user = new Role(Roles.USER);
-        Role admin = new Role(Roles.ADMIN, user);
-
-        user
-                .addPermissionRules(
-                        true,
+        Role user = RoleBuilder.create(Roles.USER)
+                .addAllowedRule(
                         "user",
                         UserConditions::isSameUser,
                         "view")
-                .addPermissionRules(true, "group", "viewMine")
-                .addPermissionRules(
-                        true,
+                .addAllowedRule("group", "viewMine")
+                .addAllowedRule(
                         "group",
                         GroupConditions::isMember,
                         "view")
-                .addPermissionRules(
-                        true,
+                .addAllowedRule(
                         "group",
                         GroupConditions::isManager,
-                        "update");
+                        "update")
+                .build();
 
         // admin can do everything in the system
-        admin.addPermissionRules(true, "*", "*");
+        Role admin = RoleBuilder.create(Roles.ADMIN)
+                .parent(user)
+                .addAllowedRule("*", "*")
+                .build();
 
         roles.put(user.getName(), user);
         roles.put(admin.getName(), admin);
