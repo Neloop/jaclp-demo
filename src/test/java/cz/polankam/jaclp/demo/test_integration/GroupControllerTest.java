@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(SpringExtension.class)
 @TestMethodOrder(MethodOrderer.Alphanumeric.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class GroupControllerTest {
+class GroupControllerTest {
 
     @Autowired
     TestRestTemplate rest;
@@ -35,7 +35,7 @@ public class GroupControllerTest {
      * access to everything.
      */
     @Test
-    public void test01_AllWithAdmin() {
+    void test01_AllWithAdmin() {
         ResponseEntity<GroupDTO[]> response = rest
                 .withBasicAuth("admin", "password")
                 .getForEntity("/groups", GroupDTO[].class);
@@ -50,7 +50,7 @@ public class GroupControllerTest {
      * accessible to normal user account.
      */
     @Test
-    public void test02_AllWithUser() {
+    void test02_AllWithUser() {
         ResponseEntity<Map> response = rest
                 .withBasicAuth("manager", "password")
                 .getForEntity("/groups", Map.class);
@@ -65,7 +65,7 @@ public class GroupControllerTest {
      * Test /groups/mine endpoint with with user account.
      */
     @Test
-    public void test03_MineWithUser() {
+    void test03_MineWithUser() {
         ResponseEntity<GroupDTO[]> response = rest
                 .withBasicAuth("manager", "password")
                 .getForEntity("/groups/mine", GroupDTO[].class);
@@ -80,7 +80,7 @@ public class GroupControllerTest {
      * access to everything.
      */
     @Test
-    public void test04_GetWithAdmin() {
+    void test04_GetWithAdmin() {
         ResponseEntity<GroupDTO> response = rest
                 .withBasicAuth("admin", "password")
                 .getForEntity("/groups/5", GroupDTO.class);
@@ -97,7 +97,7 @@ public class GroupControllerTest {
      * to access this group.
      */
     @Test()
-    public void test05_GetWithUser() {
+    void test05_GetWithUser() {
         ResponseEntity<GroupDTO> response = rest
                 .withBasicAuth("user-1", "password")
                 .getForEntity("/groups/5", GroupDTO.class);
@@ -114,7 +114,7 @@ public class GroupControllerTest {
      * have access to the group.
      */
     @Test()
-    public void test06_GetWithUser2() {
+    void test06_GetWithUser2() {
         ResponseEntity<Map> response = rest
                 .withBasicAuth("user-2", "password")
                 .getForEntity("/groups/5", Map.class);
@@ -130,7 +130,7 @@ public class GroupControllerTest {
      * should have access to the update functionality.
      */
     @Test()
-    public void test07_UpdateWithManager() {
+    void test07_UpdateWithManager() {
         GroupUpdateDTO updateDTO = new GroupUpdateDTO();
         updateDTO.setName("demo-group-updated");
         updateDTO.setDescription("updated description");
@@ -151,7 +151,7 @@ public class GroupControllerTest {
      * should not be able to update group.
      */
     @Test()
-    public void test08_UpdateWithUser() {
+    void test08_UpdateWithUser() {
         GroupUpdateDTO updateDTO = new GroupUpdateDTO();
         updateDTO.setName("demo-group-updated");
         updateDTO.setDescription("updated description");

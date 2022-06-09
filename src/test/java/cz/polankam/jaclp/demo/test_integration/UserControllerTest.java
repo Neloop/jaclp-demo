@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(SpringExtension.class)
 @TestMethodOrder(MethodOrderer.Alphanumeric.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class UserControllerTest {
+class UserControllerTest {
 
     @Autowired
     TestRestTemplate rest;
@@ -31,7 +31,7 @@ public class UserControllerTest {
      * to everything.
      */
     @Test
-    public void test01_AllWithAdmin() {
+    void test01_AllWithAdmin() {
         ResponseEntity<UserDTO[]> response = rest
                 .withBasicAuth("admin", "password")
                 .getForEntity("/users", UserDTO[].class);
@@ -46,7 +46,7 @@ public class UserControllerTest {
      * accessible to normal user account.
      */
     @Test
-    public void test02_AllWithUser() {
+    void test02_AllWithUser() {
         ResponseEntity<Map> response = rest
                 .withBasicAuth("user-1", "password")
                 .getForEntity("/users", Map.class);
@@ -58,11 +58,11 @@ public class UserControllerTest {
     }
 
     /**
-     * Test /users/{id} endpoint with with admin account which should have
+     * Test /users/{id} endpoint with admin account which should have
      * access to everything.
      */
     @Test
-    public void test03_GetWithAdmin() {
+    void test03_GetWithAdmin() {
         ResponseEntity<UserDTO> response = rest
                 .withBasicAuth("admin", "password")
                 .getForEntity("/users/2", UserDTO.class);
@@ -79,7 +79,7 @@ public class UserControllerTest {
      * user which should not be accessible to user account.
      */
     @Test()
-    public void test04_GetWithUser() {
+    void test04_GetWithUser() {
         ResponseEntity<Map> response = rest
                 .withBasicAuth("user-1", "password")
                 .getForEntity("/users/2", Map.class);
@@ -95,7 +95,7 @@ public class UserControllerTest {
      * current user and should be normally accessible.
      */
     @Test
-    public void test05_GetWithCurrentUser() {
+    void test05_GetWithCurrentUser() {
         ResponseEntity<UserDTO> response = rest
                 .withBasicAuth("manager", "password")
                 .getForEntity("/users/2", UserDTO.class);

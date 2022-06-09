@@ -37,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Allow swagger
         http.authorizeRequests()
                 .antMatchers("/",
+                        "/error",
                         "/h2-console/**")
                 .permitAll();
         // Restrict other request only for authenticated users
