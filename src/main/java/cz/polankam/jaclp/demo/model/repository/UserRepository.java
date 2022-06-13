@@ -1,7 +1,6 @@
 package cz.polankam.jaclp.demo.model.repository;
 
 import cz.polankam.jaclp.demo.model.entity.UserEntity;
-import cz.polankam.security.acl.IResourceRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,8 +10,7 @@ import java.util.Optional;
  * Created by Martin Polanka on 09.05.2020.
  */
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Long>,
-        IResourceRepository<UserEntity, Long> {
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByUsername(String username);
 }

@@ -15,8 +15,8 @@ import java.util.Map;
 @Service
 public class PermissionsService implements IPermissionsService {
 
-    private Map<String, Role> roles = new HashMap<>();
-    private Map<String, IResourceRepository> resources = new HashMap<>();
+    private final Map<String, Role> roles = new HashMap<>();
+    private final Map<String, IResourceRepository> resources = new HashMap<>();
 
     /**
      * Default constructor which initialize all user roles used within
@@ -53,8 +53,8 @@ public class PermissionsService implements IPermissionsService {
         roles.put(admin.getName(), admin);
 
         // repositories which will be used to find resources by identification
-        resources.put("user", userRepository);
-        resources.put("group", groupRepository);
+        resources.put("user", id -> userRepository.findById((Long) id).map(u -> u));
+        resources.put("group", id -> groupRepository.findById((Long) id).map(g -> g));
     }
 
     public boolean roleExists(String role) {
