@@ -15,7 +15,7 @@ package. Another interesting class is method security configuration located in
 
 The application can be compiled and run with `maven`, therefore installed 
 `maven` on the machine is a must. And of course `JDK` is needed, the application 
-can be run on `Java 11+`. After `maven` installation, run the application with:
+can be run on `Java 17+`. After `maven` installation, run the application with:
 
 ```
 mvn spring-boot:run

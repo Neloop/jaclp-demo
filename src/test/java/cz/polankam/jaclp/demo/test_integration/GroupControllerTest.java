@@ -31,7 +31,7 @@ class GroupControllerTest {
     TestRestTemplate rest;
 
     /**
-     * Test /groups endpoint with with admin account which has should have
+     * Test /groups endpoint with admin account which has should have
      * access to everything.
      */
     @Test
@@ -46,7 +46,7 @@ class GroupControllerTest {
     }
 
     /**
-     * Test /groups endpoint with with user account, this endpoint should not be
+     * Test /groups endpoint with user account, this endpoint should not be
      * accessible to normal user account.
      */
     @Test
@@ -62,7 +62,7 @@ class GroupControllerTest {
     }
 
     /**
-     * Test /groups/mine endpoint with with user account.
+     * Test /groups/mine endpoint with user account.
      */
     @Test
     void test03_MineWithUser() {
@@ -76,48 +76,48 @@ class GroupControllerTest {
     }
 
     /**
-     * Test /groups/{id} endpoint with with admin account which should have
+     * Test /groups/{id} endpoint with admin account which should have
      * access to everything.
      */
     @Test
     void test04_GetWithAdmin() {
         ResponseEntity<GroupDTO> response = rest
                 .withBasicAuth("admin", "password")
-                .getForEntity("/groups/5", GroupDTO.class);
+                .getForEntity("/groups/1", GroupDTO.class);
 
         GroupDTO body = response.getBody();
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(5L, body.getId());
+        assertEquals(1L, body.getId());
         assertEquals("demo-group", body.getName());
         assertEquals("description", body.getDescription());
     }
 
     /**
-     * Test /groups/{id} endpoint with with user account, user has permission
+     * Test /groups/{id} endpoint with user account, user has permission
      * to access this group.
      */
     @Test()
     void test05_GetWithUser() {
         ResponseEntity<GroupDTO> response = rest
                 .withBasicAuth("user-1", "password")
-                .getForEntity("/groups/5", GroupDTO.class);
+                .getForEntity("/groups/1", GroupDTO.class);
 
         GroupDTO body = response.getBody();
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(5L, body.getId());
+        assertEquals(1L, body.getId());
         assertEquals("demo-group", body.getName());
         assertEquals("description", body.getDescription());
     }
 
     /**
-     * Test /groups/{id} endpoint with with user-2 account, this user should not
+     * Test /groups/{id} endpoint with user-2 account, this user should not
      * have access to the group.
      */
     @Test()
     void test06_GetWithUser2() {
         ResponseEntity<Map> response = rest
                 .withBasicAuth("user-2", "password")
-                .getForEntity("/groups/5", Map.class);
+                .getForEntity("/groups/1", Map.class);
 
         Map body = response.getBody();
         assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
@@ -126,7 +126,7 @@ class GroupControllerTest {
     }
 
     /**
-     * Test PUT /groups/{id} endpoint with with manager account, this user
+     * Test PUT /groups/{id} endpoint with manager account, this user
      * should have access to the update functionality.
      */
     @Test()
@@ -137,17 +137,17 @@ class GroupControllerTest {
 
         ResponseEntity<GroupDTO> response = rest
                 .withBasicAuth("manager", "password")
-                .exchange("/groups/5", HttpMethod.PUT, new HttpEntity<>(updateDTO), GroupDTO.class);
+                .exchange("/groups/1", HttpMethod.PUT, new HttpEntity<>(updateDTO), GroupDTO.class);
 
         GroupDTO body = response.getBody();
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(5L, body.getId());
+        assertEquals(1L, body.getId());
         assertEquals("demo-group-updated", body.getName());
         assertEquals("updated description", body.getDescription());
     }
 
     /**
-     * Test PUT /groups/{id} endpoint with with user account, this user
+     * Test PUT /groups/{id} endpoint with user account, this user
      * should not be able to update group.
      */
     @Test()
@@ -158,7 +158,7 @@ class GroupControllerTest {
 
         ResponseEntity<Map> response = rest
                 .withBasicAuth("user-1", "password")
-                .exchange("/groups/5", HttpMethod.PUT, new HttpEntity<>(updateDTO), Map.class);
+                .exchange("/groups/1", HttpMethod.PUT, new HttpEntity<>(updateDTO), Map.class);
 
         Map body = response.getBody();
         assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());

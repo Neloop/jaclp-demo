@@ -29,13 +29,14 @@ public class SecurityConfig {
                 .headers().frameOptions().sameOrigin().and();
 
         // Allow swagger
-        http.authorizeRequests()
-                .antMatchers("/",
+        http.authorizeHttpRequests()
+                .requestMatchers(
+                        "/",
                         "/error",
                         "/h2-console/**")
                 .permitAll();
         // Restrict other request only for authenticated users
-        http.authorizeRequests().anyRequest().authenticated();
+        http.authorizeHttpRequests().anyRequest().authenticated();
         return http.build();
     }
 

@@ -3,7 +3,7 @@ package cz.polankam.jaclp.demo.model.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 /**
  * Created by Martin Polanka on 09.05.2020.

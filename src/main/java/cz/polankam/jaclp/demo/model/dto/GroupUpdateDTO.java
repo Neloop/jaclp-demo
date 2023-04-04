@@ -2,7 +2,7 @@ package cz.polankam.jaclp.demo.model.dto;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 /**
  * Created by Martin Polanka on 09.05.2020.
